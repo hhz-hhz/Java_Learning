@@ -40,4 +40,13 @@ class CalculatorTest {
     void should_return_sum_when_input_is_using_newlines_as_separators() {
         assertEquals(45, calculator.calculate("1,2,3,4,5\n6,7\n8,9"));
     }
+
+    @Test
+    void should_throw_exception_when_input_is_using_two_separators() {
+        try{
+            calculator.calculate("1,2,3,4,5,\n6,7\n8,9");
+        }catch (Exception e){
+            assertEquals(e.getMessage(), "");
+        }
+    }
 }

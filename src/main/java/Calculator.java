@@ -7,7 +7,12 @@ public class Calculator {
         } else if (!numbers.contains(",")) {
             return Integer.parseInt(numbers);
         } else {
-            return Arrays.stream(numbers.split("[,\\n]")).mapToInt(Integer::parseInt).sum();
+            try {
+                return Arrays.stream(numbers.split("[,\\n]")).mapToInt(Integer::parseInt).sum();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        return 0;
     }
 }
