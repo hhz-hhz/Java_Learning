@@ -11,6 +11,9 @@ public class Calculator {
         } else if (numbers.startsWith("//")) {
             String[] num = numbers.substring(2).split("\n");
             String regex = num[0];
+            if(regex.contains("|")){
+                regex = regex.replaceAll("\\|","\\\\|");
+            }
             return getSum(num[1], regex);
         } else if (!numbers.contains(",")) {
             return Integer.parseInt(numbers);
