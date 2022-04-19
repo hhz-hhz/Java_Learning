@@ -35,4 +35,9 @@ class CalculatorTest {
     void should_return_sum_when_input_is_an_unknown_number_of_arguments() {
         assertEquals(45, calculator.calculate("1,2,3,4,5,6,7,8,9"));
     }
+
+    @Test
+    void should_return_sum_when_input_is_using_newlines_as_separators() {
+        assertEquals(45, calculator.calculate("1,2,3,4,5\n6,7\n8,9"));
+    }
 }
