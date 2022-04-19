@@ -25,4 +25,9 @@ class CalculatorTest {
     void should_return_num_when_input_is_a_num() {
         assertEquals(3, calculator.calculate("3"));
     }
+
+    @Test
+    void should_return_sum_when_input_is_two_nums() {
+        assertEquals(3, calculator.calculate("1,2"));
+    }
 }
