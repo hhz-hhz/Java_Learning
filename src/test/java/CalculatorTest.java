@@ -88,7 +88,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_throw_exception_with_all_error_message(){
+    void should_throw_exception_with_all_error_message() {
         try {
             calculator.calculate("//|\n1|2,-3");
         } catch (Exception e) {
@@ -96,4 +96,8 @@ class CalculatorTest {
         }
     }
 
+    @Test
+    void should_return_sum_without_add_number_bigger_than_1000() {
+        assertEquals(3, calculator.calculate("//sqp\n1sqp2sqp300000"));
+    }
 }

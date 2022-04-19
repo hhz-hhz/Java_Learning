@@ -1,8 +1,6 @@
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Calculator {
     public Integer calculate(String numbers) {
@@ -39,7 +37,7 @@ public class Calculator {
             if (!message.isEmpty()) {
                 throw new RuntimeException(message);
             }
-            return Arrays.stream(numbers.split(regex)).mapToInt(Integer::parseInt).sum();
+            return Arrays.stream(numbers.split(regex)).mapToInt(Integer::parseInt).filter(m -> m <= 1000).sum();
         } catch (Exception e) {
             e.printStackTrace();
         }
