@@ -43,9 +43,9 @@ class CalculatorTest {
 
     @Test
     void should_throw_exception_when_input_is_using_two_separators() {
-        try{
+        try {
             calculator.calculate("1,2,3,4,5,\n6,7\n8,9");
-        }catch (Exception e){
+        } catch (Exception e) {
             assertEquals(e.getMessage(), "");
         }
     }
@@ -71,11 +71,20 @@ class CalculatorTest {
 
     @Test
     void should_throw_exception_when_input_is_using_wrong_separators() {
-        try{
+        try {
             calculator.calculate("//|\n1|2,-3");
-        }catch (Exception e){
+        } catch (Exception e) {
             assertEquals(e.getMessage(), "‘|’ expected but ‘,’ found at position 3.");
         }
     }
-    
+
+    @Test
+    void should_throw_exception_when_input_is_using_negative_number() {
+        try {
+            calculator.calculate("2,-4,-9");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Negative number(s) not allowed: -4, -9");
+        }
+    }
+
 }
