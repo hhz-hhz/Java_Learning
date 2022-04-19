@@ -69,5 +69,13 @@ class CalculatorTest {
         assertEquals(6, calculator.calculate("//|\n1|2|3"));
     }
 
-
+    @Test
+    void should_throw_exception_when_input_is_using_wrong_separators() {
+        try{
+            calculator.calculate("//|\n1|2,-3");
+        }catch (Exception e){
+            assertEquals(e.getMessage(), "‘|’ expected but ‘,’ found at position 3.");
+        }
+    }
+    
 }

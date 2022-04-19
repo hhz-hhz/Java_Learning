@@ -1,6 +1,6 @@
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Calculator {
     public Integer calculate(String numbers) {
@@ -13,6 +13,11 @@ public class Calculator {
             String regex = num[0];
             if(regex.contains("|")){
                 regex = regex.replaceAll("\\|","\\\\|");
+            }
+            Matcher matcher = Pattern.compile("[^\\p{Digit}"+regex+"}]").matcher(num[1]);
+            if(matcher.find()){
+                int index = matcher.start();
+                throw new RuntimeException("‘"+num[0]+"’ expected but ‘"+num[1].charAt(index)+"’ found at position "+index+".");
             }
             return getSum(num[1], regex);
         } else if (!numbers.contains(",")) {
