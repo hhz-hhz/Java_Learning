@@ -30,4 +30,9 @@ class CalculatorTest {
     void should_return_sum_when_input_is_two_nums() {
         assertEquals(3, calculator.calculate("1,2"));
     }
+
+    @Test
+    void should_return_sum_when_input_is_an_unknown_number_of_arguments() {
+        assertEquals(45, calculator.calculate("1,2,3,4,5,6,7,8,9"));
+    }
 }

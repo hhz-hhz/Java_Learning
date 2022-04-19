@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Calculator {
     public int calculate(String numbers) {
         if (numbers.isEmpty()) {
@@ -5,8 +7,7 @@ public class Calculator {
         } else if (!numbers.contains(",")) {
             return Integer.parseInt(numbers);
         } else {
-            String[] num = numbers.split(",");
-            return Integer.parseInt(num[0]) + Integer.parseInt(num[1]);
+            return Arrays.stream(numbers.split(",")).mapToInt(Integer::parseInt).sum();
         }
     }
 }
