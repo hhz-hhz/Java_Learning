@@ -59,4 +59,10 @@ class CalculatorTest {
         }
     }
 
+    @Test
+    void should_return_sum_when_using_different_delimiters() {
+        assertEquals(6, calculator.calculate("//sqp\n1sqp2sqp3"));
+    }
+
+
 }
