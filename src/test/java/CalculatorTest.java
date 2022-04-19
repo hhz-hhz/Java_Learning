@@ -20,4 +20,9 @@ class CalculatorTest {
     void should_return_1_when_input_is_1() {
         assertEquals(1, calculator.calculate("1"));
     }
+
+    @Test
+    void should_return_num_when_input_is_a_num() {
+        assertEquals(3, calculator.calculate("3"));
+    }
 }
