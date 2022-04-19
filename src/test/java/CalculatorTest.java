@@ -49,4 +49,14 @@ class CalculatorTest {
             assertEquals(e.getMessage(), "");
         }
     }
+
+    @Test
+    void should_throw_exception_when_input_is_using_separators_in_the_end() {
+        try {
+            calculator.calculate("1,2,3,4,5,\n6,7\n8,9,\n");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Can not to using a separator at the end");
+        }
+    }
+
 }
