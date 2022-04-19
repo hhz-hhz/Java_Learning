@@ -1,5 +1,8 @@
 public class Calculator {
     public int calculate(String numbers){
-        return 0;
+        if(numbers.isEmpty()){
+            return 0;
+        }
+        return 1;
     }
 }
