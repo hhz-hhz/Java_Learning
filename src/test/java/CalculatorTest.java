@@ -87,4 +87,13 @@ class CalculatorTest {
         }
     }
 
+    @Test
+    void should_throw_exception_with_all_error_message(){
+        try {
+            calculator.calculate("//|\n1|2,-3");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Negative number(s) not allowed: -3\n‘|’ expected but ‘,’ found at position 3.");
+        }
+    }
+
 }
