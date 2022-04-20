@@ -45,17 +45,17 @@ class CalculatorTest {
     void should_throw_exception_when_input_is_using_two_separators() {
         try {
             calculator.calculate("1,2,3,4,5,\n6,7\n8,9");
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "");
+        } catch (NumberFormatException e) {
+            assertEquals("", e.getMessage());
         }
     }
 
     @Test
     void should_throw_exception_when_input_is_using_separators_in_the_end() {
         try {
-            calculator.calculate("1,2,3,4,5,\n6,7\n8,9,\n");
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "Can not to using a separator at the end");
+            calculator.calculate("1,2,3,4,5\n6,7\n8,9\n");
+        } catch (RuntimeException e) {
+            assertEquals("Can not to using a separator at the end", e.getMessage());
         }
     }
 
@@ -72,9 +72,9 @@ class CalculatorTest {
     @Test
     void should_throw_exception_when_input_is_using_wrong_separators() {
         try {
-            calculator.calculate("//|\n1|2,-3");
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "‘|’ expected but ‘,’ found at position 3.");
+            calculator.calculate("//|\n1|2,3");
+        } catch (RuntimeException e) {
+            assertEquals("‘|’ expected but ‘,’ found at position 3.", e.getMessage());
         }
     }
 
@@ -82,8 +82,8 @@ class CalculatorTest {
     void should_throw_exception_when_input_is_using_negative_number() {
         try {
             calculator.calculate("2,-4,-9");
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "Negative number(s) not allowed: -4, -9");
+        } catch (RuntimeException e) {
+            assertEquals("Negative number(s) not allowed: -4, -9", e.getMessage());
         }
     }
 
@@ -91,8 +91,8 @@ class CalculatorTest {
     void should_throw_exception_with_all_error_message() {
         try {
             calculator.calculate("//|\n1|2,-3");
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "Negative number(s) not allowed: -3\n‘|’ expected but ‘,’ found at position 3.");
+        } catch (RuntimeException e) {
+            assertEquals("Negative number(s) not allowed: -3\n‘|’ expected but ‘,’ found at position 3.", e.getMessage());
         }
     }
 
