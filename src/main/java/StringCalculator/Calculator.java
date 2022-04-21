@@ -6,30 +6,52 @@ import java.util.regex.Pattern;
 
 public class Calculator {
     public Integer calculate(String numbers) {
+        String message = "";
         if (numbers.isEmpty()) {
             return 0;
-        } else if (numbers.endsWith(",|\n")) {
-            throw new RuntimeException("Can not to using a separator at the end");
         } else if (numbers.startsWith("//")) {
             String[] num = numbers.substring(2).split("\n");
             String regex = num[0];
-            if (regex.contains("|")) {
-                regex = regex.replaceAll("\\|", "\\\\|");
-            }
-            Matcher matcher = Pattern.compile("[^-?\\p{Digit}" + regex + "]").matcher(num[1]);
-            String message = getNegativeNumbers(numbers);
-            while (matcher.find()) {
-                int index = matcher.start();
-                message = (message.equals("") ? message : message + "\n") + "‘" + num[0] +
-                        "’ expected but ‘" + num[1].charAt(index) + "’ found at position " + index + ".";
-            }
+            message = validateEndSeparator(numbers, regex, message);
+            message = getNegativeNumbers(numbers, message);
+            message = validateSeparator(regex,num[1],message);
+            regex = getRegex(regex);
             return getSum(num[1], regex, message);
         } else if (!numbers.contains(",")) {
             return Integer.parseInt(numbers);
         } else {
-            String message = getNegativeNumbers(numbers);
+            message = validateEndSeparator(numbers, ",", message);
+            message = validateEndSeparator(numbers, "\n", message);
+            message = getNegativeNumbers(numbers, message);
+            message = validateSeparator(",\\n", numbers, message);
             return getSum(numbers, "[,\\n]", message);
         }
+    }
+
+    private String validateSeparator(String regex, String numbers, String message){
+        String regexString  = (regex.equals(",\\n")? ",' or newlines":regex);
+        regex = getRegex(regex);
+        Matcher matcher = Pattern.compile("[^-?\\p{Digit}" + regex + "]").matcher(numbers);
+        while (matcher.find()) {
+            int index = matcher.start();
+            message = (message.equals("") ? message : message + "\n") + "‘" + regexString +
+                    "’ expected but ‘" + numbers.charAt(index) + "’ found at position " + index + ".";
+        }
+        return message;
+    }
+
+    private String getRegex(String regex) {
+        if (regex.contains("|")) {
+            regex = regex.replaceAll("\\|", "\\\\|");
+        }
+        return regex;
+    }
+
+    private String validateEndSeparator(String numbers, String separator, String message) {
+        if (numbers.endsWith(separator)) {
+            message = (message.equals("") ? message : message + "\n") + "Can not to using a separator at the end";
+        }
+        return message;
     }
 
     private Integer getSum(String numbers, String regex, String message) {
@@ -43,15 +65,14 @@ public class Calculator {
         }
     }
 
-    private String getNegativeNumbers(String numbers) {
-        String message = "";
+    private String getNegativeNumbers(String numbers, String message) {
         Matcher matcher = Pattern.compile("-\\p{Digit}").matcher(numbers);
         StringBuilder negative = new StringBuilder();
         while (matcher.find()) {
             negative.append((!negative.toString().equals("")) ? ", " : "").append(matcher.group());
         }
         if (!negative.toString().equals("")) {
-            message = "Negative number(s) not allowed: " + negative;
+            message = (message.equals("") ? message : message + "\n") + "Negative number(s) not allowed: " + negative;
         }
         return message;
     }

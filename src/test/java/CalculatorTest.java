@@ -1,6 +1,7 @@
 import StringCalculator.Calculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,20 +45,16 @@ class CalculatorTest {
 
     @Test
     void should_throw_exception_when_input_is_using_two_separators() {
-        try {
-            calculator.calculate("1,2,3,4,5,\n6,7\n8,9");
-        } catch (NumberFormatException e) {
-            assertEquals("", e.getMessage());
-        }
+        Executable executable = () -> calculator.calculate("1,2,3,4,5,\n6,7\n8,9");
+        Exception exception = assertThrows(NumberFormatException.class, executable);
+        assertEquals("", exception.getMessage());
     }
 
     @Test
     void should_throw_exception_when_input_is_using_separators_in_the_end() {
-        try {
-            calculator.calculate("1,2,3,4,5\n6,7\n8,9\n");
-        } catch (RuntimeException e) {
-            assertEquals("Can not to using a separator at the end", e.getMessage());
-        }
+        Executable executable = () -> calculator.calculate("1,2,3,4,5\n6,7\n8,9\n");
+        Exception exception = assertThrows(RuntimeException.class, executable);
+        assertEquals("Can not to using a separator at the end", exception.getMessage());
     }
 
     @Test
@@ -71,34 +68,43 @@ class CalculatorTest {
     }
 
     @Test
-    void should_throw_exception_when_input_is_using_wrong_separators() {
-        try {
-            calculator.calculate("//|\n1|2,3");
-        } catch (RuntimeException e) {
-            assertEquals("‘|’ expected but ‘,’ found at position 3.", e.getMessage());
-        }
+    void should_throw_exception_when_input_is_using_wrong_separators_with_different_delimiters() {
+        Executable executable = () -> calculator.calculate("//|\n1|2,3");
+        Exception exception = assertThrows(RuntimeException.class, executable);
+        assertEquals("‘|’ expected but ‘,’ found at position 3.", exception.getMessage());
     }
 
     @Test
     void should_throw_exception_when_input_is_using_negative_number() {
-        try {
-            calculator.calculate("2,-4,-9");
-        } catch (RuntimeException e) {
-            assertEquals("Negative number(s) not allowed: -4, -9", e.getMessage());
-        }
+        Executable executable = () -> calculator.calculate("2,-4,-9");
+        Exception exception = assertThrows(RuntimeException.class, executable);
+        assertEquals("Negative number(s) not allowed: -4, -9", exception.getMessage());
     }
 
     @Test
     void should_throw_exception_with_all_error_message() {
-        try {
-            calculator.calculate("//|\n1|2,-3");
-        } catch (RuntimeException e) {
-            assertEquals("Negative number(s) not allowed: -3\n‘|’ expected but ‘,’ found at position 3.", e.getMessage());
-        }
+        Executable executable = () -> calculator.calculate("//|\n1|2,-3");
+        Exception exception = assertThrows(RuntimeException.class, executable);
+        assertEquals("Negative number(s) not allowed: -3\n‘|’ expected but ‘,’ found at position 3.", exception.getMessage());
     }
 
     @Test
     void should_return_sum_without_add_number_bigger_than_1000() {
         assertEquals(3, calculator.calculate("//sqp\n1sqp2sqp300000"));
     }
+
+    @Test
+    void should_throw_exception_when_input_is_using_different_delimiters_and_separators_in_the_end() {
+        Executable executable = () -> calculator.calculate("//sqp\n1sqp2sqp3sqp");
+        Exception exception = assertThrows(RuntimeException.class, executable);
+        assertEquals("Can not to using a separator at the end", exception.getMessage());
+    }
+
+    @Test
+    void should_throw_exception_when_input_is_using_wrong_separators() {
+        Executable executable = () -> calculator.calculate("1,2|3,8\n9");
+        Exception exception = assertThrows(RuntimeException.class, executable);
+        assertEquals("‘,' or newlines’ expected but ‘|’ found at position 3.", exception.getMessage());
+    }
+
 }
