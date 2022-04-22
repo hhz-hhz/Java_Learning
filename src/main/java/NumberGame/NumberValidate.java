@@ -1,6 +1,6 @@
 package NumberGame;
 
-import java.util.concurrent.atomic.AtomicInteger;
+//import java.util.concurrent.atomic.AtomicInteger;
 
 public class NumberValidate {
     public String validateDigit(String actual, String input) {
