@@ -16,22 +16,22 @@ public class Calculator {
         } else if (numbers.startsWith("//")) {
             String[] num = numbers.substring(2).split("\n");
             String regex = num[0];
-            message.add(validateEndSeparator(numbers, regex));
-            message.add(getNegativeNumbers(numbers));
-            message.addAll(validateSeparator(regex, num[1]));
+            String numberString = num[1];
+            getMessage(message, numberString, regex, regex);
             regex = getRegex(regex);
-            message.removeAll(Collections.singleton(null));
-            return getSum(num[1], regex, message);
-        } else if (numbers.chars().allMatch(Character::isDigit)) {
-            return Integer.parseInt(numbers);
+            return getSum(numberString, regex, message);
         } else {
             message.add(validateEndSeparator(numbers, ","));
-            message.add(validateEndSeparator(numbers, "\n"));
-            message.add(getNegativeNumbers(numbers));
-            message.addAll(validateSeparator(",\\n", numbers));
-            message.removeAll(Collections.singleton(null));
+            getMessage(message, numbers, "\n", ",\\n");
             return getSum(numbers, "[,\\n]", message);
         }
+    }
+
+    private void getMessage(List<String> message, String numberString, String regex, String specialRegex) {
+        message.add(validateEndSeparator(numberString, regex));
+        message.add(getNegativeNumbers(numberString));
+        message.addAll(validateSeparator(specialRegex, numberString));
+        message.removeAll(Collections.singleton(null));
     }
 
     private List<String> validateSeparator(String regex, String numbers) {
