@@ -19,4 +19,11 @@ class NumberInputTest {
         Exception exception = assertThrows(RuntimeException.class, executable);
         assertEquals("The input cannot be less than four digits", exception.getMessage());
     }
+
+    @Test
+    void should_throw_exception_when_input_is_not_number() {
+        Executable executable = () -> numberInput.validateInput("123a");
+        Exception exception = assertThrows(RuntimeException.class, executable);
+        assertEquals("The input should be a number", exception.getMessage());
+    }
 }
