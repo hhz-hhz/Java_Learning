@@ -26,4 +26,11 @@ class NumberInputTest {
         Exception exception = assertThrows(RuntimeException.class, executable);
         assertEquals("The input should be a number", exception.getMessage());
     }
+
+    @Test
+    void should_throw_exception_when_input_has_same_nums() {
+        Executable executable = () -> numberInput.validateInput("1232");
+        Exception exception = assertThrows(RuntimeException.class, executable);
+        assertEquals("The input should be different", exception.getMessage());
+    }
 }
