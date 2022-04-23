@@ -104,7 +104,7 @@ class CalculatorTest {
     void should_throw_exception_when_input_is_using_wrong_separators() {
         Executable executable = () -> calculator.calculate("1,2|3,8\n9");
         Exception exception = assertThrows(RuntimeException.class, executable);
-        assertEquals("‘,' or newlines’ expected but ‘|’ found at position 3.", exception.getMessage());
+        assertEquals("‘,‘ or newlines’ expected but ‘|’ found at position 3.", exception.getMessage());
     }
 
 }
