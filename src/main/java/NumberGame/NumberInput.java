@@ -1,7 +1,5 @@
 package NumberGame;
 
-import java.util.stream.IntStream;
-
 public class NumberInput {
     public void validateInput(String input){
         if(input.length() < 4){
