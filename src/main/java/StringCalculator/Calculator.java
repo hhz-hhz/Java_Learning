@@ -32,21 +32,36 @@ public class Calculator {
 
     private List<String> validateSeparator(String regex, String numbers) {
         List<String> message = new ArrayList<>();
-        String regexString = (regex.equals(",\\n") ? ",‘ or newlines" : regex);
-        regex = getRegex(regex);
-        Matcher matcher = Pattern.compile("[^-?\\p{Digit}" + regex + "]").matcher(numbers);
+        boolean equals = regex.equals(",\\n");
+        String regexString = regex;
+        regex = (equals ? "\\n" : regex);
+        if(equals){
+            regexString = ",‘ or newlines";
+            numbers = numbers.replaceAll("\\n", " ");
+            numbers = numbers.replaceAll(",", " ");
+        }else{
+            regex = getRegex(regex);
+            numbers = numbers.replaceAll(regex, " ");
+        }
+        numbers = numbers.replaceAll("-", " ");
+        throwMessage(numbers, message, regexString);
+        return message;
+    }
+
+    private void throwMessage(String numbers, List<String> message, String regexString) {
+        Matcher matcher = Pattern.compile("[^\\p{Digit} ]").matcher(numbers);
         while (matcher.find()) {
             int index = matcher.start();
             message.add("‘" + regexString +
                     "’ expected but ‘" + numbers.charAt(index) + "’ found at position " + index + ".");
         }
-        return message;
     }
 
     private String getRegex(String regex) {
         if (regex.contains("|")) {
             regex = regex.replaceAll("\\|", "\\\\|");
         }
+
         return regex;
     }
 
