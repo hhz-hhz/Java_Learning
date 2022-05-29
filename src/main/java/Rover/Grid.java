@@ -1,7 +1,14 @@
 package Rover;
 
+import lombok.Data;
+
+@Data
 public class Grid {
     private int width;
     private int height;
-    private MarsRover marsRover;
+
+    public Grid(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
 }

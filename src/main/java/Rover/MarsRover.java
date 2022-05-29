@@ -17,7 +17,7 @@ public class MarsRover {
         this.orientation = orientation;
     }
 
-    public void move() {
+    public void move(Grid grid) {
         switch (orientation){
             case "N":
                 y++;
@@ -31,7 +31,12 @@ public class MarsRover {
             case "E":
                 x++;
         }
+        borderMove(grid);
+    }
 
+    private void borderMove(Grid grid){
+        x = (x < 0 ? 0 : (Math.min(x, grid.getWidth())));
+        y = (y < 0 ? 0 : (Math.min(y, grid.getHeight())));
     }
 
     public void turn(String direction) {
