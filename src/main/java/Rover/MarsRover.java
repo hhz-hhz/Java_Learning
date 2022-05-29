@@ -18,7 +18,20 @@ public class MarsRover {
     }
 
     public void move() {
-        y++;
+        switch (orientation){
+            case "N":
+                y++;
+                break;
+            case "S":
+                y--;
+                break;
+            case "W":
+                x--;
+                break;
+            case "E":
+                x++;
+        }
+
     }
 
     public void turn(String direction) {
