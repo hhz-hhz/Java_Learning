@@ -1,21 +1,19 @@
 package Rover;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Arrays;
 import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MarsRover {
-    private int x;
-    private int y;
-    private String orientation;
-
-    public MarsRover(int x, int y, String orientation) {
-        this.x = x;
-        this.y = y;
-        this.orientation = orientation;
-    }
+    protected int x;
+    protected int y;
+    protected String orientation;
 
     public void move(Grid grid) {
         switch (orientation){
@@ -34,7 +32,7 @@ public class MarsRover {
         borderMove(grid);
     }
 
-    private void borderMove(Grid grid){
+    public void borderMove(Grid grid){
         x = (x < 0 ? 0 : (Math.min(x, grid.getWidth())));
         y = (y < 0 ? 0 : (Math.min(y, grid.getHeight())));
     }
